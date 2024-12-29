@@ -1,5 +1,5 @@
 # SUBSTANCE
-Modern imgui menu created with EasyImgui, based on the design originally [created by Past Owl](https://www.youtube.com/watch?v=iW4lL0psD4w)
+Modern imgui menu created with [EasyImGui](https://github.com/DestroyerDarkNess/EasyImGui), based on the design originally [created by Past Owl](https://www.youtube.com/watch?v=iW4lL0psD4w)
 
 ![{6A1FBA3E-AC68-47C1-AB90-722BFC7FE209}](https://github.com/user-attachments/assets/0cee4a28-4849-4ac7-937b-09a5c8e9e91d)
 
