@@ -39,7 +39,6 @@ namespace EasyModern
 
             Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.RealTime;
 
-            StartOverlay();
 
             //Process process = Process.GetProcessesByName("bf4").FirstOrDefault();
 
@@ -60,6 +59,9 @@ namespace EasyModern
             //else
             //{
             //    Console.WriteLine("Impossible to Inject, Continuing externally.  Press any key to continue...");
+
+            StartOverlay();
+
             //}
 
             //Console.ReadKey();
@@ -254,7 +256,7 @@ namespace EasyModern
             views.Add(new View3() { Icon = Core.Instances.ImageManager.GetImage("atom_icon") });
             views.Add(new View4() { Icon = Core.Instances.ImageManager.GetImage("atom_icon") });
 
-            //Core.WinApis.SetWindowDisplayAffinity(Core.Instances.OverlayWindow.Handle, Core.WinApis.WDA_EXCLUDEFROMCAPTURE);
+            Core.WinApis.SetWindowDisplayAffinity(Core.Instances.OverlayWindow.Handle, Core.WinApis.WDA_EXCLUDEFROMCAPTURE);
 
             return true;
         }
