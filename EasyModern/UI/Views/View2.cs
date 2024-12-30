@@ -148,6 +148,9 @@ namespace EasyModern.UI.Views
 
                 widget.ButtonClicked += (s, e) =>
                 {
+                    if (currentOption == widget.ID)
+                        return;
+
                     currentOption = widget.ID;
                     headerBar.LeftLabelText = "destroyer & substance ~& cd " + this.Text.ToLower() + "/" + this.currentOption.ToLower();
                     headerBar.ResetAnimationTimer();
@@ -232,8 +235,8 @@ namespace EasyModern.UI.Views
             DescriptionColor = new Vector4(0.8f, 0.8f, 0.8f, 1.0f),
             BorderColor = new Vector4(0.0f, 1.0f, 0.5f, 1.0f),
             IconButtonVisible = true,
-            BottomRightIconName = "uncheck",
-            BottomRightIconBgColor = new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
+            BottomRightIconName = Core.Instances.Settings.ESP_Name ? "check" : "uncheck",
+            BottomRightIconBgColor = Core.Instances.Settings.ESP_Name ? new Vector4(0.439f, 0.698f, 0.675f, 1.000f) : new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
             BorderPercent = 1f
         };
 
@@ -249,8 +252,8 @@ namespace EasyModern.UI.Views
             DescriptionColor = new Vector4(0.8f, 0.8f, 0.8f, 1.0f),
             BorderColor = new Vector4(0.0f, 1.0f, 0.5f, 1.0f),
             IconButtonVisible = true,
-            BottomRightIconName = "uncheck",
-            BottomRightIconBgColor = new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
+            BottomRightIconName = Core.Instances.Settings.ESP_Distance ? "check" : "uncheck",
+            BottomRightIconBgColor = Core.Instances.Settings.ESP_Distance ? new Vector4(0.439f, 0.698f, 0.675f, 1.000f) : new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
             BorderPercent = 1f
         };
 
@@ -266,8 +269,8 @@ namespace EasyModern.UI.Views
             DescriptionColor = new Vector4(0.8f, 0.8f, 0.8f, 1.0f),
             BorderColor = new Vector4(0.0f, 1.0f, 0.5f, 1.0f),
             IconButtonVisible = true,
-            BottomRightIconName = "uncheck",
-            BottomRightIconBgColor = new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
+            BottomRightIconName = Core.Instances.Settings.ESP_Distance_InName ? "check" : "uncheck",
+            BottomRightIconBgColor = Core.Instances.Settings.ESP_Distance_InName ? new Vector4(0.439f, 0.698f, 0.675f, 1.000f) : new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
             BorderPercent = 1f
         };
 
@@ -283,8 +286,8 @@ namespace EasyModern.UI.Views
             DescriptionColor = new Vector4(0.8f, 0.8f, 0.8f, 1.0f),
             BorderColor = new Vector4(0.0f, 1.0f, 0.5f, 1.0f),
             IconButtonVisible = true,
-            BottomRightIconName = "uncheck",
-            BottomRightIconBgColor = new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
+            BottomRightIconName = Core.Instances.Settings.ESP_Health ? "check" : "uncheck",
+            BottomRightIconBgColor = Core.Instances.Settings.ESP_Health ? new Vector4(0.439f, 0.698f, 0.675f, 1.000f) : new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
             BorderPercent = 1f
         };
 
@@ -300,8 +303,8 @@ namespace EasyModern.UI.Views
             DescriptionColor = new Vector4(0.8f, 0.8f, 0.8f, 1.0f),
             BorderColor = new Vector4(0.0f, 1.0f, 0.5f, 1.0f),
             IconButtonVisible = true,
-            BottomRightIconName = "uncheck",
-            BottomRightIconBgColor = new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
+            BottomRightIconName = Core.Instances.Settings.ESP_Box ? "check" : "uncheck",
+            BottomRightIconBgColor = Core.Instances.Settings.ESP_Box ? new Vector4(0.439f, 0.698f, 0.675f, 1.000f) : new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
             BorderPercent = 1f
         };
 
@@ -317,8 +320,8 @@ namespace EasyModern.UI.Views
             DescriptionColor = new Vector4(0.8f, 0.8f, 0.8f, 1.0f),
             BorderColor = new Vector4(0.0f, 1.0f, 0.5f, 1.0f),
             IconButtonVisible = true,
-            BottomRightIconName = "uncheck",
-            BottomRightIconBgColor = new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
+            BottomRightIconName = Core.Instances.Settings.ESP_Vehicle ? "check" : "uncheck",
+            BottomRightIconBgColor = Core.Instances.Settings.ESP_Vehicle ? new Vector4(0.439f, 0.698f, 0.675f, 1.000f) : new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
             BorderPercent = 1f
         };
 
@@ -334,8 +337,8 @@ namespace EasyModern.UI.Views
             DescriptionColor = new Vector4(0.8f, 0.8f, 0.8f, 1.0f),
             BorderColor = new Vector4(0.0f, 1.0f, 0.5f, 1.0f),
             IconButtonVisible = true,
-            BottomRightIconName = "uncheck",
-            BottomRightIconBgColor = new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
+            BottomRightIconName = Core.Instances.Settings.ESP_Enemy ? "check" : "uncheck",
+            BottomRightIconBgColor = Core.Instances.Settings.ESP_Enemy ? new Vector4(0.439f, 0.698f, 0.675f, 1.000f) : new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
             BorderPercent = 1f
         };
 
@@ -351,8 +354,8 @@ namespace EasyModern.UI.Views
             DescriptionColor = new Vector4(0.8f, 0.8f, 0.8f, 1.0f),
             BorderColor = new Vector4(0.0f, 1.0f, 0.5f, 1.0f),
             IconButtonVisible = true,
-            BottomRightIconName = "uncheck",
-            BottomRightIconBgColor = new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
+            BottomRightIconName = Core.Instances.Settings.ESP_Bone ? "check" : "uncheck",
+            BottomRightIconBgColor = Core.Instances.Settings.ESP_Bone ? new Vector4(0.439f, 0.698f, 0.675f, 1.000f) : new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
             BorderPercent = 1f
         };
 
@@ -368,8 +371,8 @@ namespace EasyModern.UI.Views
             DescriptionColor = new Vector4(0.8f, 0.8f, 0.8f, 1.0f),
             BorderColor = new Vector4(0.0f, 1.0f, 0.5f, 1.0f),
             IconButtonVisible = true,
-            BottomRightIconName = "uncheck",
-            BottomRightIconBgColor = new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
+            BottomRightIconName = Core.Instances.Settings.ESP_Line ? "check" : "uncheck",
+            BottomRightIconBgColor = Core.Instances.Settings.ESP_Line ? new Vector4(0.439f, 0.698f, 0.675f, 1.000f) : new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
             BorderPercent = 1f
         };
 
@@ -390,7 +393,7 @@ namespace EasyModern.UI.Views
             Title = "Draw Distance",
             Description = "Limit the players that will be drawn by distance.",
             Minimum = 100,
-            Maximum = 2000,
+            Maximum = 4000,
             Value = Core.Instances.Settings.ESP_DrawDistance,
             BackgroundColor = new Vector4(0.043f, 0.047f, 0.059f, 1.000f),
             Size = new Vector2(200, 90),
@@ -697,8 +700,8 @@ namespace EasyModern.UI.Views
             DescriptionColor = new Vector4(0.8f, 0.8f, 0.8f, 1.0f),
             BorderColor = new Vector4(0.0f, 1.0f, 0.5f, 1.0f),
             IconButtonVisible = true,
-            BottomRightIconName = "uncheck",
-            BottomRightIconBgColor = new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
+            BottomRightIconName = Core.Instances.Settings.Overheat_DrawBackground ? "check" : "uncheck",
+            BottomRightIconBgColor = Core.Instances.Settings.Overheat_DrawBackground ? new Vector4(0.439f, 0.698f, 0.675f, 1.000f) : new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
             BorderPercent = 1f
         };
 
@@ -715,8 +718,8 @@ namespace EasyModern.UI.Views
             DescriptionColor = new Vector4(0.8f, 0.8f, 0.8f, 1.0f),
             BorderColor = new Vector4(0.0f, 1.0f, 0.5f, 1.0f),
             IconButtonVisible = true,
-            BottomRightIconName = "uncheck",
-            BottomRightIconBgColor = new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
+            BottomRightIconName = Core.Instances.Settings.Overheat_DrawText ? "check" : "uncheck",
+            BottomRightIconBgColor = Core.Instances.Settings.Overheat_DrawText ? new Vector4(0.439f, 0.698f, 0.675f, 1.000f) : new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
             BorderPercent = 1f
         };
 

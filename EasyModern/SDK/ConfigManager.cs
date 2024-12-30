@@ -103,6 +103,12 @@ namespace EasyModern.SDK
         [JsonProperty("AIM_Fov_Color")]
         public Vector4 AIM_Fov_Color { get; set; } = new Vector4(1f, 1f, 1f, 1f);
 
+        [JsonProperty("AIM_Draw_TargetLine")]
+        public bool AIM_Draw_TargetLine { get; set; } = false;
+
+        [JsonProperty("AIM_TargetColor")]
+        public Vector4 AIM_TargetColor { get; set; } = new Vector4(1.000f, 0.000f, 0.914f, 1.000f);
+
         [JsonProperty("AIM_Type")]
         public int AIM_Type { get; set; } = 0;
 

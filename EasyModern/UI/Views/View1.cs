@@ -123,6 +123,10 @@ namespace EasyModern.UI.Views
                 widget.ButtonClicked += (s, e) =>
                 {
                     // UpdateColors(s as FunctionWidget);
+
+                    if (currentOption == widget.ID)
+                        return;
+
                     currentOption = widget.ID;
                     headerBar.LeftLabelText = "destroyer & substance ~& cd " + this.Text.ToLower() + "/" + this.currentOption.ToLower();
                     headerBar.ResetAnimationTimer();
@@ -225,8 +229,8 @@ namespace EasyModern.UI.Views
             DescriptionColor = new Vector4(0.8f, 0.8f, 0.8f, 1.0f),
             BorderColor = new Vector4(0.0f, 1.0f, 0.5f, 1.0f),
             IconButtonVisible = true,
-            BottomRightIconName = "uncheck",
-            BottomRightIconBgColor = new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
+            BottomRightIconName = Core.Instances.Settings.AIM_Visible_Check ? "check" : "uncheck",
+            BottomRightIconBgColor = Core.Instances.Settings.AIM_Visible_Check ? new Vector4(0.439f, 0.698f, 0.675f, 1.000f) : new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
             BorderPercent = 1f
         };
 
@@ -242,8 +246,8 @@ namespace EasyModern.UI.Views
             DescriptionColor = new Vector4(0.8f, 0.8f, 0.8f, 1.0f),
             BorderColor = new Vector4(0.0f, 1.0f, 0.5f, 1.0f),
             IconButtonVisible = true,
-            BottomRightIconName = "uncheck",
-            BottomRightIconBgColor = new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
+            BottomRightIconName = Core.Instances.Settings.AIM_AimAtAll ? "check" : "uncheck",
+            BottomRightIconBgColor = Core.Instances.Settings.AIM_AimAtAll ? new Vector4(0.439f, 0.698f, 0.675f, 1.000f) : new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
             BorderPercent = 1f
         };
 
@@ -259,8 +263,8 @@ namespace EasyModern.UI.Views
             DescriptionColor = new Vector4(0.8f, 0.8f, 0.8f, 1.0f),
             BorderColor = new Vector4(0.0f, 1.0f, 0.5f, 1.0f),
             IconButtonVisible = true,
-            BottomRightIconName = "uncheck",
-            BottomRightIconBgColor = new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
+            BottomRightIconName = Core.Instances.Settings.AIM_StickTarget ? "check" : "uncheck",
+            BottomRightIconBgColor = Core.Instances.Settings.AIM_StickTarget ? new Vector4(0.439f, 0.698f, 0.675f, 1.000f) : new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
             BorderPercent = 1f
         };
 
@@ -310,8 +314,8 @@ namespace EasyModern.UI.Views
             DescriptionColor = new Vector4(0.8f, 0.8f, 0.8f, 1.0f),
             BorderColor = new Vector4(0.0f, 1.0f, 0.5f, 1.0f),
             IconButtonVisible = true,
-            BottomRightIconName = "uncheck",
-            BottomRightIconBgColor = new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
+            BottomRightIconName = Core.Instances.Settings.AIM_Driver_First ? "check" : "uncheck",
+            BottomRightIconBgColor = Core.Instances.Settings.AIM_Driver_First ? new Vector4(0.439f, 0.698f, 0.675f, 1.000f) : new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
             BorderPercent = 1f
         };
 
@@ -327,8 +331,8 @@ namespace EasyModern.UI.Views
             DescriptionColor = new Vector4(0.8f, 0.8f, 0.8f, 1.0f),
             BorderColor = new Vector4(0.0f, 1.0f, 0.5f, 1.0f),
             IconButtonVisible = true,
-            BottomRightIconName = "uncheck",
-            BottomRightIconBgColor = new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
+            BottomRightIconName = Core.Instances.Settings.AIM_AutoAim ? "check" : "uncheck",
+            BottomRightIconBgColor = Core.Instances.Settings.AIM_AutoAim ? new Vector4(0.439f, 0.698f, 0.675f, 1.000f) : new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
             BorderPercent = 1f
         };
 
@@ -344,8 +348,8 @@ namespace EasyModern.UI.Views
             DescriptionColor = new Vector4(0.8f, 0.8f, 0.8f, 1.0f),
             BorderColor = new Vector4(0.0f, 1.0f, 0.5f, 1.0f),
             IconButtonVisible = true,
-            BottomRightIconName = "uncheck",
-            BottomRightIconBgColor = new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
+            BottomRightIconName = Core.Instances.Settings.AIM_Vehicle ? "check" : "uncheck",
+            BottomRightIconBgColor = Core.Instances.Settings.AIM_Vehicle ? new Vector4(0.439f, 0.698f, 0.675f, 1.000f) : new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
             BorderPercent = 1f
         };
 
@@ -361,8 +365,25 @@ namespace EasyModern.UI.Views
             DescriptionColor = new Vector4(0.8f, 0.8f, 0.8f, 1.0f),
             BorderColor = new Vector4(0.0f, 1.0f, 0.5f, 1.0f),
             IconButtonVisible = true,
-            BottomRightIconName = "uncheck",
-            BottomRightIconBgColor = new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
+            BottomRightIconName = Core.Instances.Settings.AIM_Draw_Fov ? "check" : "uncheck",
+            BottomRightIconBgColor = Core.Instances.Settings.AIM_Draw_Fov ? new Vector4(0.439f, 0.698f, 0.675f, 1.000f) : new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
+            BorderPercent = 1f
+        };
+
+        CheckWidget AIM_Draw_TargetLine_CheckWidget = new CheckWidget
+        {
+            ID = "AIM_Draw_TargetLine_check",
+            Title = "Target Line",
+            Description = "Draw Target Line",
+            Checked = Core.Instances.Settings.AIM_Draw_TargetLine,
+            Size = new Vector2(200, 90),
+            BackgroundColor = new Vector4(0.043f, 0.047f, 0.059f, 1.000f),
+            TitleColor = new Vector4(1.0f, 0.9f, 0.3f, 1.0f),
+            DescriptionColor = new Vector4(0.8f, 0.8f, 0.8f, 1.0f),
+            BorderColor = new Vector4(0.0f, 1.0f, 0.5f, 1.0f),
+            IconButtonVisible = true,
+            BottomRightIconName = Core.Instances.Settings.AIM_Draw_TargetLine ? "check" : "uncheck",
+            BottomRightIconBgColor = Core.Instances.Settings.AIM_Draw_TargetLine ? new Vector4(0.439f, 0.698f, 0.675f, 1.000f) : new Vector4(1.000f, 0.490f, 0.592f, 1.000f),
             BorderPercent = 1f
         };
 
@@ -373,6 +394,17 @@ namespace EasyModern.UI.Views
             Description = "Fov Color",
             EnableAlpha = true,
             SelectedColor = Core.Instances.Settings.AIM_Fov_Color,
+            BackgroundColor = new Vector4(0.043f, 0.047f, 0.059f, 1.000f),
+            Size = new Vector2(200, 90),
+        };
+
+        ColorPickerWidget AIM_TargetColor_ColorPickerWidget = new ColorPickerWidget
+        {
+            ID = "AIM_TargetColor_ColorPickerWidget",
+            Title = "Target Color",
+            Description = "Target Line Color",
+            EnableAlpha = true,
+            SelectedColor = Core.Instances.Settings.AIM_TargetColor,
             BackgroundColor = new Vector4(0.043f, 0.047f, 0.059f, 1.000f),
             Size = new Vector2(200, 90),
         };
@@ -396,8 +428,10 @@ namespace EasyModern.UI.Views
                 AIM_Type_ComboWidget.SelectedIndexChanged += Aim_Checks;
                 AIM_Fov_trackBarWidget.ValueChanged += Aim_Checks;
                 AIM_Draw_Fov_CheckWidget.CheckedChanged += Aim_Checks;
+                AIM_Draw_TargetLine_CheckWidget.CheckedChanged += Aim_Checks;
 
                 AIM_Fov_Color_ColorPickerWidget.ColorChanged += Aim_Checks;
+                AIM_TargetColor_ColorPickerWidget.ColorChanged += Aim_Checks;
             }
 
             AIM_Visible_CheckWidget.Render();
@@ -420,7 +454,12 @@ namespace EasyModern.UI.Views
 
             AIM_Draw_Fov_CheckWidget.Render();
             ImGui.SameLine(210);
+            AIM_Draw_TargetLine_CheckWidget.Render();
+            ImGui.SameLine(420);
             AIM_Fov_Color_ColorPickerWidget.Render();
+
+            AIM_TargetColor_ColorPickerWidget.Render();
+
         }
 
         public void Aim_Checks(object sender, EventArgs e)
@@ -468,6 +507,10 @@ namespace EasyModern.UI.Views
                 {
                     Core.Instances.Settings.AIM_Draw_Fov = widget.Checked;
                 }
+                else if (widget.ID == AIM_Draw_TargetLine_CheckWidget.ID)
+                {
+                    Core.Instances.Settings.AIM_Draw_TargetLine = widget.Checked;
+                }
             }
             else if (sender is ComboBoxWidget)
             {
@@ -497,6 +540,10 @@ namespace EasyModern.UI.Views
                 if (widget.ID == AIM_Fov_Color_ColorPickerWidget.ID)
                 {
                     Core.Instances.Settings.AIM_Fov_Color = widget.SelectedColor;
+                }
+                else if (widget.ID == AIM_TargetColor_ColorPickerWidget.ID)
+                {
+                    Core.Instances.Settings.AIM_TargetColor = widget.SelectedColor;
                 }
             }
         }
