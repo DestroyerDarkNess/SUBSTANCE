@@ -12,6 +12,8 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -54,42 +56,24 @@
     <LangVersion>7.3</LangVersion>
     <ErrorReport>prompt</ErrorReport>
     <Prefer32Bit>true</Prefer32Bit>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>badge.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EasyImGui, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\EasyImGui.1.1.2\lib\net48\EasyImGui.dll</HintPath>
-    </Reference>
-    <Reference Include="Hexa.NET.ImGui, Version=1.91.5.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hexa.NET.ImGui.2.2.2\lib\netstandard2.0\Hexa.NET.ImGui.dll</HintPath>
-    </Reference>
-    <Reference Include="Hexa.NET.ImGui.Backends, Version=1.0.10.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Hexa.NET.ImGui.Backends.1.0.10\lib\netstandard2.0\Hexa.NET.ImGui.Backends.dll</HintPath>
-    </Reference>
-    <Reference Include="HexaGen.Runtime, Version=1.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\HexaGen.Runtime.1.1.16\lib\net472\HexaGen.Runtime.dll</HintPath>
+    <Reference Include="EasyImGui_Hydra, Version=1.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libs\EasyImGui_Hydra.dll</HintPath>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.13.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="RenderSpy, Version=1.7.8.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RenderSpy.1.7.8\lib\net46\RenderSpy.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Buffers, Version=4.0.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.6.0\lib\net462\System.Buffers.dll</HintPath>
-    </Reference>
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
-    <Reference Include="System.Memory, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.6.0\lib\net462\System.Memory.dll</HintPath>
-    </Reference>
+    <Reference Include="System.Management" />
     <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.5.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.6.0\lib\net462\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.1.0\lib\net462\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -102,14 +86,28 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Drawing\TextureDrawing.cs" />
+    <Compile Include="Core\Effects\Battlefield4Effect.cs" />
+    <Compile Include="Core\Effects\FakeHDREffect.cs" />
+    <Compile Include="Core\Effects\ImageEffect.cs" />
+    <Compile Include="Core\Effects\SharinganCrosshair.cs" />
+    <Compile Include="Core\Effects\TextureEffectManager.cs" />
+    <Compile Include="Core\Model\ITheme.cs" />
+    <Compile Include="Core\Shaders\BlurEffect.cs" />
     <Compile Include="Core\Font\FontManager.cs" />
+    <Compile Include="Core\Model\EffectBase.cs" />
     <Compile Include="Core\Texture\ImageManager.cs" />
     <Compile Include="Core\Input\InputImguiEmu.cs" />
     <Compile Include="Core\Instances.cs" />
     <Compile Include="Core\Model\IView.cs" />
+    <Compile Include="Core\Capture\GameCapture.cs" />
+    <Compile Include="Core\Utils\ColorRGB.cs" />
     <Compile Include="Core\Utils\Helper.cs" />
+    <Compile Include="Core\Utils\MathExtensions.cs" />
     <Compile Include="Core\Utils\NumericsExtensions.cs" />
+    <Compile Include="Core\Utils\PEMutator.cs" />
     <Compile Include="Core\Utils\SharpDXColorExtensions.cs" />
+    <Compile Include="Core\Utils\TextureHelper.cs" />
     <Compile Include="Core\Utils\WindowFinder.cs" />
     <Compile Include="Core\WinApis.cs" />
     <Compile Include="Program.cs" />
@@ -122,21 +120,92 @@
     <Compile Include="SDK\Cheat.cs" />
     <Compile Include="SDK\ConfigManager.cs" />
     <Compile Include="SDK\ImGuiDrawingUtils.cs" />
-    <Compile Include="SDK\Offsets.cs" />
     <Compile Include="SDK\Player.cs" />
+    <Compile Include="UI\Particles\ExplosionParticleSystem.cs" />
+    <Compile Include="UI\Particles\FireParticleSystem.cs" />
+    <Compile Include="UI\Particles\GalaxyParticleSystem.cs" />
+    <Compile Include="UI\Particles\OscillatingParticles.cs" />
+    <Compile Include="UI\Particles\ParticleSystemChristmas.cs" />
+    <Compile Include="UI\Particles\ParticleSystemMatrix.cs" />
+    <Compile Include="UI\Particles\ParticleSystemNodes.cs" />
+    <Compile Include="UI\Particles\StormParticleSystem.cs" />
+    <Compile Include="UI\Themes\AdobeInspired.cs" />
+    <Compile Include="UI\Themes\Battlefield4Theme.cs" />
+    <Compile Include="UI\Themes\BHTheme.cs" />
+    <Compile Include="UI\Themes\BlueTheme.cs" />
+    <Compile Include="UI\Themes\BootstrapDark.cs" />
+    <Compile Include="UI\Themes\BreathingTheme.cs" />
+    <Compile Include="UI\Themes\Cherry.cs" />
+    <Compile Include="UI\Themes\CleanDark.cs" />
+    <Compile Include="UI\Themes\Codz.cs" />
+    <Compile Include="UI\Themes\Comfy.cs" />
+    <Compile Include="UI\Themes\CommunistRed.cs" />
+    <Compile Include="UI\Themes\GrayStyleTheme.cs" />
+    <Compile Include="UI\Themes\RayTeakTransparent.cs" />
+    <Compile Include="UI\Themes\CustomRedTheme.cs" />
+    <Compile Include="UI\Themes\cyberpunk.cs" />
+    <Compile Include="UI\Themes\DarkDefault.cs" />
+    <Compile Include="UI\Themes\DarkGreen.cs" />
+    <Compile Include="UI\Themes\DarkRuda.cs" />
+    <Compile Include="UI\Themes\Darky.cs" />
+    <Compile Include="UI\Themes\DayNightTheme.cs" />
+    <Compile Include="UI\Themes\DeepDark.cs" />
+    <Compile Include="UI\Themes\DefaultTheme.cs" />
+    <Compile Include="UI\Themes\DesortDarkBlueTheme.cs" />
+    <Compile Include="UI\Themes\Discord.cs" />
+    <Compile Include="UI\Themes\Dracula.cs" />
+    <Compile Include="UI\Themes\DUCKRED.cs" />
+    <Compile Include="UI\Themes\Everforest.cs" />
+    <Compile Include="UI\Themes\FluentTheme.cs" />
+    <Compile Include="UI\Themes\FutureDark.cs" />
+    <Compile Include="UI\Themes\Glass.cs" />
+    <Compile Include="UI\Themes\Gold.cs" />
+    <Compile Include="UI\Themes\GruvboxDark.cs" />
+    <Compile Include="UI\Themes\GruvboxDayNightTheme.cs" />
+    <Compile Include="UI\Themes\GruvboxLight.cs" />
+    <Compile Include="UI\Themes\HackerTheme.cs" />
+    <Compile Include="UI\Themes\HazyDark.cs" />
+    <Compile Include="UI\Themes\HighContrast.cs" />
+    <Compile Include="UI\Themes\Light.cs" />
+    <Compile Include="UI\Themes\LightClean.cs" />
+    <Compile Include="UI\Themes\MaterialDesign.cs" />
+    <Compile Include="UI\Themes\Modern.cs" />
+    <Compile Include="UI\Themes\Moonlight.cs" />
+    <Compile Include="UI\Themes\Nord.cs" />
+    <Compile Include="UI\Themes\Photoshop.cs" />
+    <Compile Include="UI\Themes\Purple.cs" />
+    <Compile Include="UI\Themes\QuickMinimal.cs" />
+    <Compile Include="UI\Themes\RainbowTheme.cs" />
+    <Compile Include="UI\Themes\RayTeak.cs" />
+    <Compile Include="UI\Themes\RedDark.cs" />
+    <Compile Include="UI\Themes\RedDarkTheme.cs" />
+    <Compile Include="UI\Themes\Rest.cs" />
+    <Compile Include="UI\Themes\Retro80sNeonTheme.cs" />
+    <Compile Include="UI\Themes\ShivaAnimatedTheme.cs" />
+    <Compile Include="UI\Themes\SonicRiders.cs" />
+    <Compile Include="UI\Themes\Tuke.cs" />
+    <Compile Include="UI\Themes\Unreal.cs" />
+    <Compile Include="UI\Themes\Valve.cs" />
+    <Compile Include="UI\Themes\Windark.cs" />
     <Compile Include="UI\Views\View1.cs" />
     <Compile Include="UI\Views\View2.cs" />
     <Compile Include="UI\Views\View3.cs" />
     <Compile Include="UI\Views\View4.cs" />
+    <Compile Include="UI\Widgets\AlertWindow.cs" />
     <Compile Include="UI\Widgets\CheckWidget.cs" />
     <Compile Include="UI\Widgets\ColorPickerWidget.cs" />
     <Compile Include="UI\Widgets\ComboBoxWidget.cs" />
     <Compile Include="UI\Widgets\FunctionWidget.cs" />
     <Compile Include="UI\Widgets\HeaderBar.cs" />
+    <Compile Include="UI\Widgets\TextBoxWidget.cs" />
     <Compile Include="UI\Widgets\TrackBarWidget.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Font\nexstar-roman-a.ttf" />
+    <None Include="Font\nexstar-roman-b.ttf" />
+    <None Include="Font\nexstar-roman-c.ttf" />
+    <None Include="Font\nexstar-roman-d.ttf" />
     <None Include="Font\ProtoMono-Light.ttf" />
     <None Include="Font\ProtoMono-Regular.ttf" />
     <None Include="Font\ProtoMono-SemiBold.ttf" />
@@ -226,6 +295,20 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\12_white.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\teammate.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\enemi.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\plane.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="badge.ico" />
+    <None Include="Resources\badge.ico" />
+    <None Include="Resources\badge.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

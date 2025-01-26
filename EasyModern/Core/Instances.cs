@@ -1,4 +1,9 @@
 ﻿using EasyImGui;
+using EasyModern.Core.Drawing;
+using EasyModern.Core.Effects;
+using EasyModern.Core.Model;
+using EasyModern.Core.Utils;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace EasyModern.Core
@@ -19,10 +24,15 @@ namespace EasyModern.Core
         public static Font.FontManager fontManager = null;
 
         public static OverlayMode OverlayMode = OverlayMode.Normal;
-        public static string GameWindowTitle = "Counter-Strike";
+        public static string GameWindowTitle = "Counter-Strike"; // "Counter-Strike"; // "Form1";  
         public static Process GameProcess = null;
-
         public static SDK.Cheat Cheat = null;
         public static SDK.ConfigManager Settings = SDK.ConfigManager.LoadConfig();
+        //Effects/Shaders 
+        public static ColorRGB RGBColors = new ColorRGB() { transitionSpeed = 2.0f };
+        public static List<ITheme> Themes = null;
+        public static Themer.ThemerApplier Theme = null;
+        public static TextureDrawing TextureDrawing = null;
+        public static TextureEffectManager TextureEffectManager = null;
     }
 }

@@ -18,6 +18,7 @@ namespace EasyModern.UI.Widgets
 
         public Vector4 OnColor { get; set; } = new Vector4(0.3f, 1.0f, 0.3f, 1.0f);
         public Vector4 OffColor { get; set; } = new Vector4(1.0f, 0.3f, 0.3f, 1.0f);
+        public bool ShowStatusLabel { get; set; } = true;
 
         public float MarginX { get; set; } = 15.0f;
         public float MarginY { get; set; } = 10.0f;
@@ -27,6 +28,8 @@ namespace EasyModern.UI.Widgets
 
         public bool Animating { get; set; } = false;
         public float BorderOffset { get; set; } = 0.0f;
+
+        public float AnimationSpeed { get; set; } = 0.5f;
 
         private bool _checked = false;
         public bool Checked
@@ -79,9 +82,7 @@ namespace EasyModern.UI.Widgets
 
             if (!Enabled)
             {
-                // Gris oscuro para fondo
                 bgColor = new Vector4(0.2f, 0.2f, 0.2f, 1.0f);
-                // Gris claro para texto, borde y botón
                 Vector4 grayLight = new Vector4(0.7f, 0.7f, 0.7f, 1.0f);
                 titleColor = grayLight;
                 descColor = grayLight;
@@ -119,17 +120,21 @@ namespace EasyModern.UI.Widgets
             ImGui.PushFont(Core.Instances.fontManager.GetFont("widget_des"));
             ImGui.TextColored(descColor, Description);
             ImGui.PopFont();
-            // ON/OFF
-            string onOffText = Checked ? "ON" : "OFF";
-            Vector2 onOffSize = ImGui.CalcTextSize(onOffText);
 
-            float bottomY = localMax.Y - MarginY - onOffSize.Y;
-            float bottomX = localMin.X + MarginX;
-            ImGui.SetCursorPos(new Vector2(bottomX, bottomY));
-            Vector4 onOffVec = Checked ? onColor : offColor;
-            ImGui.TextColored(onOffVec, onOffText);
+            if (ShowStatusLabel)
+            {
+                // ON/OFF
+                string onOffText = Checked ? "ON" : "OFF";
+                Vector2 onOffSize = ImGui.CalcTextSize(onOffText);
 
-            ImGui.PopTextWrapPos();
+                float bottomY = localMax.Y - MarginY - onOffSize.Y;
+                float bottomX = localMin.X + MarginX;
+                ImGui.SetCursorPos(new Vector2(bottomX, bottomY));
+                Vector4 onOffVec = Checked ? onColor : offColor;
+                ImGui.TextColored(onOffVec, onOffText);
+
+                ImGui.PopTextWrapPos();
+            }
 
             // Borde
             float targetAlpha = Checked ? 1.0f : 0.0f;
@@ -139,10 +144,19 @@ namespace EasyModern.UI.Widgets
 
             if (currentBorderAlpha > 0.01f)
             {
+                // Ajustamos la animación del offset usando la nueva propiedad AnimationSpeed
                 if (Animating)
+                {
+                    float dt = ImGui.GetIO().DeltaTime;
+                    BorderOffset += dt * AnimationSpeed;  // Controla la velocidad
+                    BorderOffset %= 1.0f;                 // Ciclo infinito en [0..1)
+
                     DrawAnimatedBorder(drawList, widgetMin, widgetMax, BorderPercent, borderColU32, LineThickness);
+                }
                 else
+                {
                     DrawStaticBorder(drawList, widgetMin, widgetMax, BorderPercent, borderColU32, LineThickness);
+                }
             }
 
             // Área del botón ícono (cuadrado del tamaño IconButtonSize)
@@ -315,5 +329,4 @@ namespace EasyModern.UI.Widgets
             return new Vector2(min.X, max.Y - distance);
         }
     }
-
 }

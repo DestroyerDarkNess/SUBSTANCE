@@ -18,6 +18,13 @@ namespace EasyModern.SDK
             drawList.AddRect(min, max, colU32, 0.0f, ImDrawFlags.None, stroke);
         }
 
+        public static void DrawTriangleFilled(ImDrawListPtr drawList, Vector2 p1, Vector2 p2, Vector2 p3, Vector4 color)
+        {
+            uint col = ImGui.GetColorU32(color);
+            drawList.AddTriangleFilled(p1, p2, p3, col);
+        }
+
+
         /// <summary>
         /// Dibuja un rectángulo relleno.
         /// </summary>
@@ -146,6 +153,205 @@ namespace EasyModern.SDK
             uint colU32 = ImGui.ColorConvertFloat4ToU32(color);
             drawList.AddText(new Vector2(textX, textY), colU32, text);
         }
+
+        /// <summary>
+        /// Dibuja texto centrado dentro de un rectángulo con soporte para etiquetas de color hexadecimal.
+        /// </summary>
+        public static void DrawTextCenterHex(ImDrawListPtr drawList, int x, int y, int w, int h, string text, bool outline = false)
+        {
+            // Calculamos el tamaño total del texto (sin considerar las etiquetas de color)
+            string cleanText = RemoveHexTags(text);
+            var size = ImGui.CalcTextSize(cleanText);
+
+            // Centramos el texto
+            float textX = x + (w - size.X) / 2.0f;
+            float textY = y + (h - size.Y) / 2.0f;
+
+            // Posición inicial del cursor
+            Vector2 cursorPos = new Vector2(textX, textY);
+
+            int currentIndex = 0;
+
+            while (currentIndex < text.Length)
+            {
+                // Buscar la etiqueta de color
+                int openBraceIndex = text.IndexOf('{', currentIndex);
+                int closeBraceIndex = text.IndexOf('}', openBraceIndex + 1);
+
+                // Si no hay más etiquetas de color
+                if (openBraceIndex == -1 || closeBraceIndex == -1)
+                {
+                    string remainingText = text.Substring(currentIndex);
+
+                    if (outline)
+                    {
+                        // Dibujar texto con contorno
+                        Vector4 black = new Vector4(0, 0, 0, 1);
+                        uint blackU32 = ImGui.ColorConvertFloat4ToU32(black);
+                        drawList.AddText(new Vector2(cursorPos.X + 1, cursorPos.Y + 1), blackU32, remainingText);
+                    }
+
+                    // Dibujar texto restante en blanco
+                    uint whiteU32 = ImGui.ColorConvertFloat4ToU32(new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+                    drawList.AddText(cursorPos, whiteU32, remainingText);
+                    break;
+                }
+
+                // Dibujar el texto antes de la etiqueta de color
+                string preColorText = text.Substring(currentIndex, openBraceIndex - currentIndex);
+                if (!string.IsNullOrEmpty(preColorText))
+                {
+                    if (outline)
+                    {
+                        // Dibujar texto con contorno
+                        Vector4 black = new Vector4(0, 0, 0, 1);
+                        uint blackU32 = ImGui.ColorConvertFloat4ToU32(black);
+                        drawList.AddText(new Vector2(cursorPos.X + 1, cursorPos.Y + 1), blackU32, preColorText);
+                    }
+
+                    uint whiteU32 = ImGui.ColorConvertFloat4ToU32(new Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+                    drawList.AddText(cursorPos, whiteU32, preColorText);
+
+                    // Avanzar la posición del cursor
+                    cursorPos.X += ImGui.CalcTextSize(preColorText).X;
+                }
+
+                // Extraer el código de color hexadecimal
+                string hexColor = text.Substring(openBraceIndex + 1, closeBraceIndex - openBraceIndex - 1);
+                Vector4 color = HexToVector4(hexColor);
+
+                // Dibujar el texto después de la etiqueta de color
+                int nextOpenBraceIndex = text.IndexOf('{', closeBraceIndex + 1);
+                string colorText = nextOpenBraceIndex == -1
+                    ? text.Substring(closeBraceIndex + 1)
+                    : text.Substring(closeBraceIndex + 1, nextOpenBraceIndex - closeBraceIndex - 1);
+
+                if (!string.IsNullOrEmpty(colorText))
+                {
+                    if (outline)
+                    {
+                        // Dibujar texto con contorno
+                        Vector4 black = new Vector4(0, 0, 0, 1);
+                        uint blackU32 = ImGui.ColorConvertFloat4ToU32(black);
+                        drawList.AddText(new Vector2(cursorPos.X + 1, cursorPos.Y + 1), blackU32, colorText);
+                    }
+
+                    uint colorU32 = ImGui.ColorConvertFloat4ToU32(color);
+                    drawList.AddText(cursorPos, colorU32, colorText);
+
+                    // Avanzar la posición del cursor
+                    cursorPos.X += ImGui.CalcTextSize(colorText).X;
+                }
+
+                currentIndex = closeBraceIndex + 1 + colorText.Length;
+            }
+        }
+
+
+        /// <summary>
+        /// Remueve las etiquetas de color hexadecimal del texto.
+        /// </summary>
+        private static string RemoveHexTags(string text)
+        {
+            int currentIndex = 0;
+            string cleanText = "";
+
+            while (currentIndex < text.Length)
+            {
+                int openBraceIndex = text.IndexOf('{', currentIndex);
+                int closeBraceIndex = text.IndexOf('}', openBraceIndex + 1);
+
+                if (openBraceIndex == -1 || closeBraceIndex == -1)
+                {
+                    cleanText += text.Substring(currentIndex);
+                    break;
+                }
+
+                cleanText += text.Substring(currentIndex, openBraceIndex - currentIndex);
+                currentIndex = closeBraceIndex + 1;
+            }
+
+            return cleanText;
+        }
+
+
+        public static void DrawText(ImDrawListPtr drawList, Vector2 position, string text, float fontSize)
+        {
+            Vector2 cursorPos = position;
+            int currentIndex = 0;
+
+            while (currentIndex < text.Length)
+            {
+                // Buscar la etiqueta de color
+                int openBraceIndex = text.IndexOf('{', currentIndex);
+                int closeBraceIndex = text.IndexOf('}', openBraceIndex + 1);
+
+                // Si no hay más etiquetas de color
+                if (openBraceIndex == -1 || closeBraceIndex == -1)
+                {
+                    // Dibujar el texto restante en blanco
+                    string remainingText = text.Substring(currentIndex);
+                    drawList.AddText(cursorPos, ImGui.GetColorU32(new Vector4(1.0f, 1.0f, 1.0f, 1.0f)), remainingText);
+                    break;
+                }
+
+                // Dibujar el texto antes de la etiqueta de color
+                string preColorText = text.Substring(currentIndex, openBraceIndex - currentIndex);
+                if (!string.IsNullOrEmpty(preColorText))
+                {
+                    drawList.AddText(cursorPos, ImGui.GetColorU32(new Vector4(1.0f, 1.0f, 1.0f, 1.0f)), preColorText);
+                    cursorPos.X += ImGui.CalcTextSize(preColorText).X; // Mover la posición del cursor
+                }
+
+                // Extraer el código de color hexadecimal
+                string hexColor = text.Substring(openBraceIndex + 1, closeBraceIndex - openBraceIndex - 1);
+                Vector4 color = HexToVector4(hexColor);
+
+                // Dibujar el texto después de la etiqueta de color
+                int nextOpenBraceIndex = text.IndexOf('{', closeBraceIndex + 1);
+                string colorText = nextOpenBraceIndex == -1
+                    ? text.Substring(closeBraceIndex + 1)
+                    : text.Substring(closeBraceIndex + 1, nextOpenBraceIndex - closeBraceIndex - 1);
+
+                if (!string.IsNullOrEmpty(colorText))
+                {
+                    drawList.AddText(cursorPos, ImGui.GetColorU32(color), colorText);
+                    cursorPos.X += ImGui.CalcTextSize(colorText).X; // Mover la posición del cursor
+                }
+
+                currentIndex = closeBraceIndex + 1 + colorText.Length;
+            }
+        }
+
+        public static Vector4 HexToVector4(string hex)
+        {
+            if (hex.Length != 6)
+                throw new ArgumentException($"Hex color {hex} must be 6 characters long.");
+
+            float r = int.Parse(hex.Substring(0, 2), System.Globalization.NumberStyles.HexNumber) / 255.0f;
+            float g = int.Parse(hex.Substring(2, 2), System.Globalization.NumberStyles.HexNumber) / 255.0f;
+            float b = int.Parse(hex.Substring(4, 2), System.Globalization.NumberStyles.HexNumber) / 255.0f;
+
+            return new Vector4(r, g, b, 1.0f); // Asume opacidad completa
+        }
+
+        public static string Vector4ToHex(Vector4 color)
+        {
+            // Asegurarse de que los valores RGB están en el rango [0, 1]
+            color.X = Core.Utils.MathExtensions.Clamp(color.X, 0.0f, 1.0f);
+            color.Y = Core.Utils.MathExtensions.Clamp(color.Y, 0.0f, 1.0f);
+            color.Z = Core.Utils.MathExtensions.Clamp(color.Z, 0.0f, 1.0f);
+
+            // Convertir cada componente a un valor hexadecimal (0-255)
+            int r = (int)(color.X * 255);
+            int g = (int)(color.Y * 255);
+            int b = (int)(color.Z * 255);
+
+            // Formatear como hexadecimal en el formato RRGGBB
+            return $"{r:X2}{g:X2}{b:X2}";
+        }
+
+
 
         /// <summary>
         /// Dibuja una línea entre dos puntos.

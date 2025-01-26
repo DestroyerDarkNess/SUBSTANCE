@@ -19,6 +19,7 @@ namespace EasyModern.UI.Widgets
         public float Minimum { get; set; } = 0.0f;
         public float Maximum { get; set; } = 100.0f;
         public float Value = 50.0f;
+        public bool FloatValue = true;
 
         public Vector4 TrackBarBackgroundColor { get; set; } = new Vector4(0.2f, 0.2f, 0.2f, 1.0f);
         public Vector4 TrackBarFillColor { get; set; } = new Vector4(0.3f, 0.7f, 0.3f, 1.0f);
@@ -80,14 +81,31 @@ namespace EasyModern.UI.Widgets
             ImGui.PushStyleColor(ImGuiCol.FrameBgHovered, ImGui.ColorConvertFloat4ToU32(TrackBarHoveredColor));
             ImGui.PushStyleColor(ImGuiCol.SliderGrabActive, ImGui.ColorConvertFloat4ToU32(TrackBarFillColor));
 
-            float oldValue = Value;
-            if (ImGui.SliderFloat("##TrackBar" + ID, ref Value, Minimum, Maximum))
+
+            if (FloatValue)
             {
-                if (Math.Abs(Value - oldValue) > float.Epsilon)
+                float oldValue = Value;
+                if (ImGui.SliderFloat("##TrackBar" + ID, ref Value, Minimum, Maximum))
                 {
-                    OnValueChanged(EventArgs.Empty);
+                    if (Math.Abs(Value - oldValue) > float.Epsilon)
+                    {
+                        OnValueChanged(EventArgs.Empty);
+                    }
                 }
             }
+            else
+            {
+                int oldValue = (int)Value;
+                if (ImGui.SliderInt("##TrackBar" + ID, ref oldValue, (int)Minimum, (int)Maximum))
+                {
+                    if (Math.Abs(Value - oldValue) > float.Epsilon)
+                    {
+                        OnValueChanged(EventArgs.Empty);
+                    }
+                }
+                Value = oldValue;
+            }
+
 
             ImGui.PopStyleColor(4);
             ImGui.PopItemWidth();

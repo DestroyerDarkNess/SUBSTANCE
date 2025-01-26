@@ -122,6 +122,8 @@ namespace EasyModern.Core.Input
 
         private Hexa.NET.ImGui.ImGuiIOPtr IO;
 
+        public bool Enabled { get; set; } = true;
+
         // SINGLE Key Events:
         private Dictionary<Keys, Action> singleKeyEvents = new Dictionary<Keys, Action>();
         private Dictionary<Keys, DateTime> singleKeyLastTriggered = new Dictionary<Keys, DateTime>();
@@ -191,7 +193,7 @@ namespace EasyModern.Core.Input
                             char c = ConvertKeyToChar(key.Key);
                             if (c != '\0')
                             {
-                                IO.AddInputCharacter(c);
+                                if (Enabled) IO.AddInputCharacter(c);
                             }
                             keyLastPressed[key.Value] = DateTime.Now;
                         }
@@ -268,6 +270,7 @@ namespace EasyModern.Core.Input
                     // Just like in single keys, we could reset here if we wanted
                 }
             }
+
         }
 
         // ----------------------------------------------------------------------

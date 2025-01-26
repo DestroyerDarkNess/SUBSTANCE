@@ -14,6 +14,7 @@ namespace EasyModern.SDK
         public Vector2 Sway;
         public Vector3 ShootSpace;
         public bool BoneCheck;
+        public bool Chams;
         public bool InVehicle;
         public bool IsDriver;
         public bool IsMeAiming;
@@ -47,11 +48,18 @@ namespace EasyModern.SDK
         // Vehicle
         public float VehicleHealth;
         public float VehicleMaxHealth;
+
         public Matrix VehicleTranfsorm;
+
 
         public bool IsValid()
         {
             return (/*Health > 0 && Health <= 100 && */!Origin.IsZero());
+        }
+
+        public bool IsAlive()
+        {
+            return (Health > 0 && Health <= 100);
         }
 
         public bool IsVisible()

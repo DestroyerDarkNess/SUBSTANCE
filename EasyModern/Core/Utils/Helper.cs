@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Drawing;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
@@ -45,49 +48,35 @@ namespace EasyModern.Core.Utils
                          SWP_NOZORDER | SWP_NOACTIVATE);
         }
 
-        public enum Measure
-        {
-            Milliseconds = 1,
-            Seconds = 2,
-            Minutes = 3,
-            Hours = 4
-        }
 
-        public static void Sleep(long duration, Measure measure = Measure.Seconds)
+        public static Icon ConvertToIco(Image img, int size)
         {
-            DateTime startTime = DateTime.Now;
-
-            switch (measure)
+            Icon icon;
+            using (var msImg = new MemoryStream())
+            using (var msIco = new MemoryStream())
             {
-                case Measure.Milliseconds:
-                    while ((DateTime.Now - startTime).TotalMilliseconds < duration)
-                    {
-                        Application.DoEvents();
-                    }
-                    break;
-                case Measure.Seconds:
-                    while ((DateTime.Now - startTime).TotalSeconds < duration)
-                    {
-                        Application.DoEvents();
-                    }
-                    break;
-                case Measure.Minutes:
-                    while ((DateTime.Now - startTime).TotalMinutes < duration)
-                    {
-                        Application.DoEvents();
-                    }
-                    break;
-                case Measure.Hours:
-                    while ((DateTime.Now - startTime).TotalHours < duration)
-                    {
-                        Application.DoEvents();
-                    }
-                    break;
-                default:
-                    break;
+                img.Save(msImg, ImageFormat.Png);
+                using (var bw = new BinaryWriter(msIco))
+                {
+                    bw.Write((short)0);           //0-1 reserved
+                    bw.Write((short)1);           //2-3 image type, 1 = icon, 2 = cursor
+                    bw.Write((short)1);           //4-5 number of images
+                    bw.Write((byte)size);         //6 image width
+                    bw.Write((byte)size);         //7 image height
+                    bw.Write((byte)0);            //8 number of colors
+                    bw.Write((byte)0);            //9 reserved
+                    bw.Write((short)0);           //10-11 color planes
+                    bw.Write((short)32);          //12-13 bits per pixel
+                    bw.Write((int)msImg.Length);  //14-17 size of image data
+                    bw.Write(22);                 //18-21 offset of image data
+                    bw.Write(msImg.ToArray());    // write image data
+                    bw.Flush();
+                    bw.Seek(0, SeekOrigin.Begin);
+                    icon = new Icon(msIco);
+                }
             }
+            return icon;
         }
-
 
 
     }
