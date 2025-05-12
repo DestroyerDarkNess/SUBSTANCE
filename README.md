@@ -1,6 +1,9 @@
 # SUBSTANCE
 Modern imgui menu created with [EasyImGui](https://github.com/DestroyerDarkNess/EasyImGui), based on the design originally [created by Past Owl](https://www.youtube.com/watch?v=iW4lL0psD4w)
 
+My Discord Server :
+[![Discord Banner 2](https://discord.com/api/guilds/1327640073348317235/widget.png?style=banner2)](https://discord.gg/C4evgU4Tas)
+
 # Original
 ![{647EAB76-2DE3-440B-BB87-B71EB4776D54}](https://github.com/user-attachments/assets/580ce3ca-0ec5-4c21-9627-0e6edbaefecf)
 
